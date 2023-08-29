@@ -1,4 +1,4 @@
-img/**
-!img/
+/*.png
+!/test.png
 tmp.png
 qrcode/qrcode.png

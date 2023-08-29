@@ -15,9 +15,9 @@ import json
 #     def get(self):
 #         self.set_status(204)
 
-img_path = "/home/kkchanghps2023/MagicMirror/modules/TakePicture_QRcode/img/photo" #Directory path for storing images
+img_path = "./modules/QRPicture/img/photo" #Directory path for storing images
 url = "http://172.20.10.2:8888/img/photo" #IP address needs to be changed to the IP address of the Raspberry Pi
-qrcode_path = "/home/kkchanghps2023/MagicMirror/modules/TakePicture_QRcode/qrcode/qrcode.png" #Directory path for saving QR codes
+qrcode_path = "./modules/QRPicture/qrcode/qrcode.png" #Directory path for saving QR codes
 
 
 def TakePicture(): 

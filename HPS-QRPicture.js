@@ -3,21 +3,21 @@ Module.register("HPS-QRPicture", {
     defaults: {},
 
     getStyles: function () {
-        return ["QRPicture.css"];
+        return [this.file('QRPicture.css')];
+    },
+    start: function () {
         this.state = 'init'
     },
 
-
     // Override dom generator.
     getDom: function () {
-        this.state = 'init'
         var element = document.createElement("div");
         element.className = "imageshow";
 
         var image = document.createElement("img")
         image.id = "Photo";
         image.className = "image";
-        image.src = '/modules/HPS-QRPicture/init.png';
+        image.src = './modules/HPS-QRPicture/init.png';
         image.style.maxWidth = this.config.maxWidth;
 
         var wrapper = document.createElement("div");
@@ -39,45 +39,52 @@ Module.register("HPS-QRPicture", {
             else {
                 this.sendSocketNotification("TAKE_PICTURE")
             }
-    });
+        })
+        
+        var QRicon = document.createElement("i");
+        QRicon.className = "fa-solid fa-barcode";
+        var QRbtn = document.createElement("button");
+        QRbtn.id = "GenerateQRcode";
+        QRbtn.className = "btn";
+        QRbtn.innerHTML = "Save";
+        QRbtn.appendChild(QRicon);
+        QRbtn.addEventListener("click", () => {
+          // Do something when the button is clicked
+          this.sendSocketNotification("GENERATE_QRCODE")
+        });
+        QRbtn.style.display = 'none'
 
         element.appendChild(image);
-        element.appendChild(wrapper);
         wrapper.appendChild(TPbtn);
+        wrapper.appendChild(QRbtn)
+        element.appendChild(wrapper);
 
         return element;
     },
+    
     socketNotificationReceived: function(notification, payload) {
+        var helper = this
         var Photo = document.getElementById('Photo')
         var wrapper = document.getElementById('Wrapper')
         var takePicture = document.getElementById('TakePicture')
+        var QRbtn = document.getElementById('GenerateQRcode')
         this.state = notification
+        this.sendSocketNotification("debug", this.state)
         switch(notification) {
           case 'init':
             Photo.src = './modules/HPS-QRPicture/init.png'
             takePicture.innerHTML = 'Take Picture'
+            QRbtn.style.display = 'none'
             break
           case 'show':
-            Photo.src = './modules/HPS-QRPicture/tmp.png'
-            var QRicon = document.createElement("i");
-            QRicon.className = "fa-solid fa-barcode";
-            var QRbtn = document.createElement("button");
-            QRbtn.id = "GenerateQRcode";
-            QRbtn.className = "btn";
-            QRbtn.innerHTML = "Generate QR Code";
-            QRbtn.appendChild(QRicon);
-            QRbtn.addEventListener("click", () => {
-              // Do something when the button is clicked
-              this.sendSocketNotification("GENERATE_QRCODE")
-            });
-            wrapper.appendChild(QRbtn)
+            Photo.src = './modules/HPS-QRPicture/tmp.png?' + Date.now()
+            takePicture.innerHTML = 'Retake'
+            QRbtn.style.display = 'block'
             break
           case 'qrcode': 
-            var QRbtn = document.getElementById('GenerateQRcode')
-            if QRbtn:
-                wrapper.removeChild(QRbtn)
-            Photo.src = './modules/HPS-QRPiture/qrcode/qrcode.png'
-            takePicture.innerHTML = 'Close QR Code'
+            Photo.src = './modules/HPS-QRPicture/qrcode/qrcode.png?' + Date.now()
+            takePicture.innerHTML = 'Close'
+            QRbtn.style.display = 'none'
             break
         }
     }

@@ -13,6 +13,10 @@ module.exports = NodeHelper.create({
     socketNotificationReceived: function (notification, payload) {
         var helper = this
         switch (notification) {
+            case 'debug':
+                console.log('[debug]')
+                console.log(payload)
+                break 
             case "TAKE_PICTURE":
                 console.log("take_picture")
                 var take = spawn('python3', ['./modules/HPS-QRPicture/pic.py'])

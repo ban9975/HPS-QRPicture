@@ -16,7 +16,7 @@ if len(sys.argv) < 2:
 elif sys.argv[1] == 'server':
     # start the server
     app = tornado.web.Application([
-        (r"./modules/HPS-QRPicture/img/(.*)", tornado.web.StaticFileHandler, {"path": "./modules/HPS-QRPicture/img/"}),
+        (r"/img/(.*)", tornado.web.StaticFileHandler, {"path": "/modules/HPS-QRPicture/img/"}),
         # (r"/favicon.ico", FaviconHandler),
     ])
     
@@ -41,3 +41,4 @@ elif sys.argv[1] == 'qrcode':
     # generate qrcode
     qr_code = pyqrcode.create(url + count + ".png")
     qr_code.png(qrcode_path, scale=6)
+    print('')

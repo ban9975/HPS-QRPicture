@@ -5,7 +5,6 @@ import png
 import json
 import sys
 import shutil
-import os
 
 img_path = "./modules/HPS-QRPicture/img/photo" #Directory path for storing images
 url = "http://192.168.216.38:8888/img/photo" #IP address needs to be changed to the IP address of the Raspberry Pi
@@ -37,9 +36,8 @@ elif sys.argv[1] == 'qrcode':
         json.dump(data, f, indent=2)
 
     # save picture
-    shutil.copy('./modules/HPS-QRPicture/tmp.png', img_path + count)
+    shutil.copy('./modules/HPS-QRPicture/img/tmp.png', img_path + count)
 
     # generate qrcode
     qr_code = pyqrcode.create(url + count + ".png")
     qr_code.png(qrcode_path, scale=6)
-    print('python generate qrcode')

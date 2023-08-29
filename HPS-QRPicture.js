@@ -17,7 +17,7 @@ Module.register("HPS-QRPicture", {
         var image = document.createElement("img")
         image.id = "Photo";
         image.className = "image";
-        image.src = './modules/HPS-QRPicture/init.png';
+        image.src = './modules/HPS-QRPicture/img/init.png';
         image.style.maxWidth = this.config.maxWidth;
 
         var wrapper = document.createElement("div");
@@ -72,12 +72,12 @@ Module.register("HPS-QRPicture", {
         this.sendSocketNotification("debug", this.state)
         switch(notification) {
           case 'init':
-            Photo.src = './modules/HPS-QRPicture/init.png'
+            Photo.src = './modules/HPS-QRPicture/img/init.png'
             takePicture.innerHTML = 'Take Picture'
             QRbtn.style.display = 'none'
             break
           case 'show':
-            Photo.src = './modules/HPS-QRPicture/tmp.png?' + Date.now()
+            Photo.src = './modules/HPS-QRPicture/img/tmp.png?' + Date.now()
             takePicture.innerHTML = 'Retake'
             QRbtn.style.display = 'block'
             break

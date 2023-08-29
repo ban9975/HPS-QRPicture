@@ -5,6 +5,7 @@ import png
 import json
 import sys
 import shutil
+import os
 
 img_path = "./modules/HPS-QRPicture/img/photo" #Directory path for storing images
 url = "http://192.168.216.38:8888/img/photo" #IP address needs to be changed to the IP address of the Raspberry Pi
@@ -15,8 +16,10 @@ if len(sys.argv) < 2:
     exit()
 elif sys.argv[1] == 'server':
     # start the server
+    dirRun = os.path.dirname(__file__)
+    dirPath = os.path.join(dirRun, './img/')
     app = tornado.web.Application([
-        (r"/img/(.*)", tornado.web.StaticFileHandler, {"path": "/modules/HPS-QRPicture/img/"}),
+        (r"/img/(.*)", tornado.web.StaticFileHandler, {"path": dirPath}),
         # (r"/favicon.ico", FaviconHandler),
     ])
     

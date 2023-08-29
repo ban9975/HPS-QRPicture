@@ -36,7 +36,7 @@ elif sys.argv[1] == 'qrcode':
         json.dump(data, f, indent=2)
 
     # save picture
-    shutil.copy('./modules/HPS-QRPicture/img/tmp.png', img_path + count)
+    shutil.copy('./modules/HPS-QRPicture/img/tmp.png', img_path + count + '.png')
 
     # generate qrcode
     qr_code = pyqrcode.create(url + count + ".png")
